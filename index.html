@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Be My Valentine ❤️</title>
+
   <style>
     body {
+      margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       font-family: Arial, sans-serif;
       overflow: hidden;
@@ -19,18 +21,19 @@
       padding: 40px;
       border-radius: 20px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
     }
 
     h1 {
       color: #e60073;
+      font-size: 38px;
     }
 
     button {
-      padding: 12px 24px;
       font-size: 18px;
+      padding: 12px 28px;
       border: none;
-      border-radius: 10px;
+      border-radius: 30px;
       cursor: pointer;
       margin: 10px;
     }
@@ -44,19 +47,75 @@
       background: #ccc;
       position: absolute;
     }
+
+    /* After YES styles */
+    .love-screen {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+      color: #e60073;
+    }
+
+    .love-screen h1 {
+      font-size: 52px;
+      margin-bottom: 20px;
+    }
+
+    .love-screen p {
+      max-width: 900px;
+      font-size: 22px;
+      line-height: 1.7;
+    }
+
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -10px;
+      font-size: 30px;
+      animation: floatUp linear forwards;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
+
 <body>
 
-  <div class="box">
-    <h1>Will you be my Valentine? 💖</h1>
-    <button id="yes" onclick="yesClick()">Yes</button>
-    <button id="no">No</button>
+  <div class="box" id="questionBox">
+    <h1>Yuvika, will you be my Valentine? ❤️</h1>
+    <button id="yes" onclick="yesClicked()">Yes 💖</button>
+    <button id="no">No 🙈</button>
   </div>
+
+  <div class="hearts"></div>
 
   <script>
     const noBtn = document.getElementById("no");
 
+    // No button runs away
     noBtn.addEventListener("mouseover", () => {
       const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
       const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -64,8 +123,44 @@
       noBtn.style.top = y + "px";
     });
 
-    function yesClick() {
-      document.body.innerHTML = "<h1 style='color:#e60073;'>Yay!!! 💕😍</h1>";
+    function yesClicked() {
+      document.body.innerHTML = `
+        <div class="love-screen">
+          <h1>Yuvika ❤️</h1>
+          <p>
+            From the moment you came into my life, everything changed in the
+            most beautiful way. Your smile lights up my world, your voice
+            feels like home, and your presence brings me a kind of peace
+            I never knew I needed.  
+            <br><br>
+            I don’t just love you for who you are, but for how you make me
+            feel every single day. You are my happiness, my comfort, my
+            safe place, and my favorite person in this world.  
+            <br><br>
+            I promise to choose you, to stand by you, and to love you with
+            everything I have — today, tomorrow, and always. 💕
+          </p>
+        </div>
+        <div class="hearts"></div>
+      `;
+      startHearts();
+    }
+
+    function startHearts() {
+      const container = document.querySelector(".hearts");
+
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+        container.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }, 300);
     }
   </script>
 
